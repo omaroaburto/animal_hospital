@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('phone', 20)->unique();
             $table->string('avatar')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->timestamp('last_login_at')->nullable(); 
+            $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

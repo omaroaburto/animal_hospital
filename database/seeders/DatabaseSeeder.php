@@ -17,17 +17,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ['admin', 'client'];
+        $roles = ['superadmin','admin', 'client'];
 
-        // Creamos exactamente 2 registros mapeando los nombres del array
         Role::factory()
             ->count(count($roles))
             ->state(new Sequence(
                 fn (Sequence $sequence) => ['name' => $roles[$sequence->index]],
             ))
             ->create();
+
+        //crea 1 superadmin
         User::factory()
-            ->count(10)
+            ->count(1)
+            ->create();
+            
+        //crea 2 admin
+        User::factory()
+            ->count(2)
+            ->admin()
             ->create();
 
     }

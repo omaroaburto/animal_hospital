@@ -1,6 +1,6 @@
 <?php
 
-namespace App\domains\Auth\Actions;
+namespace App\Domains\Auth\Actions;
 
 use App\domains\Auth\Models\Role;
 use Illuminate\Database\Eloquent\Collection;

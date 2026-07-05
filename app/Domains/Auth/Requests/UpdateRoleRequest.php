@@ -1,10 +1,10 @@
 <?php
 
-namespace App\domains\Auth\Requests;
+namespace App\Domains\Auth\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\ApiFormRequest; 
 
-class UpdateRoleRequest extends FormRequest
+class UpdateRoleRequest extends ApiFormRequest
 {
     public function authorize(): bool
     {
@@ -13,7 +13,7 @@ class UpdateRoleRequest extends FormRequest
 
     public function rules(): array
     {
-        // Buscamos el parámetro de la ruta. 
+        // Buscamos el parámetro de la ruta.
         $roleParam = $this->route('role');
 
         // Obtenemos el ID de forma segura sin importar si viene el modelo o solo el ID/Nombre en texto

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\domains\Auth\Actions;
+namespace App\Domains\Auth\Actions;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Validation\ValidationException;
@@ -12,6 +12,14 @@ class LoginAction
         if(!$token = JWTAuth::attempt($credentials)){
             throw ValidationException::withMessages([
                 'email' => ['Usuario o contraseña incorrecta.'],
+            ]);
+        }
+
+        //valida que la cuenta del usuario se encuentre activa.
+        $user = JWTAuth::user();
+        if(!$user->is_active){
+            throw ValidationException::withMessages([
+                'email' => ['Tu cuenta se encuentra inactiva. No puedes iniciar sesión.'],
             ]);
         }
 

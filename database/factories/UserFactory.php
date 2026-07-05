@@ -24,7 +24,20 @@ class UserFactory extends Factory
             'avatar' => 'https://loremflickr.com/all/?lock=' . fake()->unique()->numberBetween(1, 1000),
             'is_active' => fake()->boolean(90),
             'last_login_at' => fake()->optional(0.7, null)->dateTimeBetween('-14 days', 'now'),
-            'role_id' => 1,
+            'role_id' => 1, //por defecto crea un super administrador
         ];
+    }
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role_id' => 2 //administrador
+        ]);
+    }
+
+    public function client(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role_id' => 3
+        ]);
     }
 }

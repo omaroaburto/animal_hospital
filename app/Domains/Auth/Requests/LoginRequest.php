@@ -1,6 +1,6 @@
 <?php
 
-namespace App\domains\Auth\Requests;
+namespace App\Domains\Auth\Requests;
 
 use App\Http\Requests\ApiFormRequest;
 

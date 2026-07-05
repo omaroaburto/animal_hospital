@@ -1,9 +1,10 @@
 <?php
 
-namespace App\domains\Auth\Models;
+namespace App\Domains\Auth\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use HasFactory, Notifiable, SoftDeletes;
     protected $fillable = [
@@ -25,6 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'avatar',
         'is_active',
         'last_login_at',
+        'email_verified_at',
         'verification_token',
         'role_id'
     ];

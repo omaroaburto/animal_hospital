@@ -2,41 +2,49 @@
 
 namespace App\domains\Auth\Controllers;
 
-use App\domains\Auth\Actions\IndexRoleAction;
-use App\domains\Auth\Actions\StoreRoleAction;
-use App\domains\Auth\Actions\UpdateRoleAction;
-use App\domains\Auth\Models\Role;
-use App\domains\Auth\Models\User;
-use App\domains\Auth\Requests\StoreRoleRequest;
-use App\domains\Auth\Requests\UpdateRoleRequest;
-use App\domains\Auth\Resources\RoleCollection;
-use App\domains\Auth\Resources\RoleResource;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Domains\Auth\Actions\IndexRoleAction;
+use App\Domains\Auth\Actions\ShowRoleAction;
+use App\Domains\Auth\Actions\StoreRoleAction;
+use App\Domains\Auth\Actions\UpdateRoleAction;
+use App\Domains\Auth\Models\Role; 
+use App\Domains\Auth\Requests\StoreRoleRequest;
+use App\Domains\Auth\Requests\UpdateRoleRequest;
+use App\Domains\Auth\Resources\RoleCollection;
+use App\Domains\Auth\Resources\RoleResource;
+use App\Http\Controllers\Controller; 
 use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
+    //listar roles
     public function index(IndexRoleAction $indexRoleAction)
     {
-        Gate::authorize('view', Role::class);
+        Gate::authorize('viewRole', Role::class);
         return new RoleCollection($indexRoleAction());
     }
 
-    public function show(Role $role): RoleResource
+    //buscar rol por id o por name 
+    public function show(
+        string $identifier,
+        ShowRoleAction $showRole
+    ): RoleResource
     {
+        $role = $showRole($identifier);
         Gate::authorize('viewAny', $role);
         return new RoleResource($role);
     }
 
+    //crear rol
     public function store(StoreRoleRequest $request,
                           StoreRoleAction $storeRoleAction
     ): RoleResource
     {
-
+        Gate::authorize('create', Role::class);
         $role = $storeRoleAction($request->validated());
         return new RoleResource($role);
     }
+
+    //actualizar rol
     public function update(
         UpdateRoleRequest $request,
         UpdateRoleAction $updateRoleAction,

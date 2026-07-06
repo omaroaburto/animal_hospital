@@ -1,17 +1,17 @@
 <?php
 
-namespace App\domains\Auth\Controllers;
+namespace App\Domains\Auth\Controllers;
 
 use App\Domains\Auth\Actions\IndexRoleAction;
 use App\Domains\Auth\Actions\ShowRoleAction;
 use App\Domains\Auth\Actions\StoreRoleAction;
 use App\Domains\Auth\Actions\UpdateRoleAction;
-use App\Domains\Auth\Models\Role; 
+use App\Domains\Auth\Models\Role;
 use App\Domains\Auth\Requests\StoreRoleRequest;
 use App\Domains\Auth\Requests\UpdateRoleRequest;
 use App\Domains\Auth\Resources\RoleCollection;
 use App\Domains\Auth\Resources\RoleResource;
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
@@ -23,7 +23,7 @@ class RoleController extends Controller
         return new RoleCollection($indexRoleAction());
     }
 
-    //buscar rol por id o por name 
+    //buscar rol por id o por name
     public function show(
         string $identifier,
         ShowRoleAction $showRole

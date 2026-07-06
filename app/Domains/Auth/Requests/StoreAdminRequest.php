@@ -18,7 +18,7 @@ class StoreAdminRequest extends ApiFormRequest
             'email'      => ['required', 'email','max:100', 'unique:users,email'],
             'password'   => ['required','string','min:8','alpha_num','max:25'],
             'phone'      => ['required','regex:/^(?:\+56)?9\d{8}$/','digits:9'],
-            'avatar'     => ['nullable', 'url'],
+            'avatar'     => ['nullable','image','mimes:jpeg,png,jpg,webp','max:2048'],
         ];
     }
     public function messages(): array
@@ -54,8 +54,10 @@ class StoreAdminRequest extends ApiFormRequest
             'phone.regex'         => 'El formato del teléfono no es válido.',
             'phone.digits'        => 'El número de teléfono debe tener exactamente 9 dígitos.',
 
-            // Avatar
-            'avatar.url'          => 'La dirección de la imagen (enlace) no es válida.',
+             //avatar
+            'image.image' => 'El archivo seleccionado debe ser una imagen válida.',
+            'image.mimes' => 'La imagen debe estar en uno de los siguientes formatos: jpeg, png, jpg o webp.',
+            'image.max'   => 'La imagen es demasiado pesada. El tamaño máximo permitido es de 2 MB.',
         ];
     }
 }

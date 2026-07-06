@@ -22,7 +22,7 @@ class UpdateAdminRequest extends ApiFormRequest
             'email'      => [$isPut ? 'required' : 'sometimes', 'email','max:100', Rule::unique('users', 'email')->ignore($userId)],
             'password'   => ['sometimes','required','string','min:8','alpha_num','max:25'],
             'phone'      => [$isPut ? 'required' : 'sometimes','regex:/^(?:\+56)?9\d{8}$/','digits:9'],
-            'avatar'     => ['nullable', 'url'],
+            'avatar'     => ['nullable','image','mimes:jpeg,png,jpg,webp','max:2048'],
         ];
     }
     public function messages(): array
@@ -58,8 +58,10 @@ class UpdateAdminRequest extends ApiFormRequest
             'phone.regex'         => 'El formato del teléfono no es válido.',
             'phone.digits'        => 'El número de teléfono debe tener exactamente 9 dígitos.',
 
-            // Avatar
-            'avatar.url'          => 'La dirección de la imagen (enlace) no es válida.',
+            //avatar
+            'image.image' => 'El archivo seleccionado debe ser una imagen válida.',
+            'image.mimes' => 'La imagen debe estar en uno de los siguientes formatos: jpeg, png, jpg o webp.',
+            'image.max'   => 'La imagen es demasiado pesada. El tamaño máximo permitido es de 2 MB.',
         ];
     }
 }

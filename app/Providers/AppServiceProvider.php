@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Policies\AdminPolicy;
+use App\Shared\Images\Contracts\ImageUploader;
+use App\Shared\Images\Services\CloudinaryUploader;
+use App\Shared\Images\Services\LocalUploader;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +17,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Enlace polimórfico del gestor de imágenes
+        $this->app->bind(ImageUploader::class, function ($app) {
+
+            $driver = config('filesystems.image_driver', 'cloudinary');
+
+            return match ($driver) {
+                'cloudinary' => new CloudinaryUploader(),
+                'local'      => new LocalUploader(),
+                // 'cloudflare'   => new CloudflareUploader(),  <-- Espacio listo para Cloudflare
+                // 'google_drive' => new GoogleDriveUploader(), <-- Espacio listo para Google Drive
+                default => throw new \RuntimeException("El driver de imágenes [{$driver}] no está soportado o configurado."),
+            };
+        });
     }
 
     /**

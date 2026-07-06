@@ -2,22 +2,26 @@
 
 namespace App\Domains\Auth\Actions;
 
+use App\Domains\Auth\Contracts\StoreUserActionInterface;
+use App\Domains\Auth\DTOs\CreateUserDto;
 use App\Domains\Auth\Exceptions\RoleNotFoundException;
 use App\Domains\Auth\Models\Role;
-use App\Domains\Auth\Models\User; 
+use App\Domains\Auth\Models\User;
 
-class StoreUserAction
+class StoreUserAction implements StoreUserActionInterface
 {
-    public function __invoke(array $validatedData, string $roleName): User
+    public function __invoke(CreateUserDto $validatedData, string $roleName): User
     {
         //valida que exista el rol
         if(!$role = Role::where('name', $roleName)->first()){
             throw new RoleNotFoundException("El rol '{$roleName}' no está registrado.");
         }
-        $validatedData['role_id'] = $role->id;
-        $validatedData['is_active'] = true;
-        //se crea la cuenta del administrador
-        $user =  User::create($validatedData);
+        //se crea la cuenta usuario
+        $user =  User::create([
+            ...$validatedData->toArray(),
+            'role_id' => $role,
+            'is_active' => true
+        ]);
         return $user;
     }
 }

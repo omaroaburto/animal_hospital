@@ -5,7 +5,7 @@ namespace App\Domains\Auth\Controllers;
 use App\Domains\Auth\Actions\DeactivateUserAction;
 use App\Domains\Auth\Actions\IndexUserAction;
 use App\Domains\Auth\Actions\RestoreUserAction;
-use App\Domains\Auth\Actions\SendVerificationEmailAction; 
+use App\Domains\Auth\Actions\SendVerificationEmailAction;
 use App\Domains\Auth\Actions\StoreUserAction;
 use App\Domains\Auth\Actions\UpdateUserAction;
 use App\Domains\Auth\Models\User;
@@ -15,7 +15,7 @@ use App\Domains\Auth\Resources\AdminCollection;
 use App\Domains\Auth\Resources\AdminResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,7 +41,7 @@ class AdminController extends Controller
         return new AdminResource($admin);
     }
     public function show(
-        User $admin 
+        User $admin
     ): AdminResource
     {
         Gate::authorize('view',$admin);

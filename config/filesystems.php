@@ -15,6 +15,13 @@ return [
 
     'default' => env('FILESYSTEM_DISK', 'local'),
 
+    // ======================================================================
+    //* CONFIGURACIÓN PERSONALIZADA PARA TU ARQUITECTURA DDD
+    // ======================================================================
+    //* Esto enlaza tu .env con el config() que lee el AppServiceProvider
+
+    'image_driver' => env('IMAGE_DRIVER', 'cloudinary'),
+
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks

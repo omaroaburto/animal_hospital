@@ -91,6 +91,14 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
 
+    // Manejo global para errores del SDK de Cloudinary
+    $exceptions->render(function (\Cloudinary\Api\Exception\ApiError $e, Request $request) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Hubo un problema con el proveedor de almacenamiento de imágenes.',
+            'details' => $e->getMessage()
+        ], Response::HTTP_BAD_GATEWAY);
+    });
 
 })->create();
 

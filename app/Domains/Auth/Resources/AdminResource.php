@@ -14,7 +14,8 @@ class AdminResource extends JsonResource
             'last_name'     => $this['last_name'],
             'email'         => $this['email'],
             'phone'         => $this['phone'],
-            'avatar'        => $this['avatar'],
+            'avatar_url'    => $this['avatar_url'],
+            'avatar_id'     => $this['avatar_id'],
             'is_active'     => $this['is_active'],
             'last_login_at' => $this['last_login_at']
         ];

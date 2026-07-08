@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('verification_token', 100)->nullable();
             $table->string('password');
             $table->string('phone', 20)->unique();
-            $table->string('avatar')->nullable();
+            $table->string('avatar_url')->nullable();
+            $table->string('avatar_id')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();

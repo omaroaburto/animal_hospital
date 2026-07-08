@@ -1,6 +1,8 @@
 <?php
 namespace App\Domains\Auth\DTOs;
 
+use App\Domains\Auth\Requests\StoreAdminRequest;
+
 class CreateUserDto{
     public function __construct(
         public string $first_name,
@@ -25,5 +27,17 @@ class CreateUserDto{
             'avatar_url' => $this->avatar_url,
             'avatar_id' => $this->avatar_id,
         ];
+    }
+
+    public static function fromRequest(StoreAdminRequest $request): self
+    {
+        return new self(
+            first_name: $request->validated('first_name'),
+            last_name:  $request->validated('last_name'),
+            name:       $request->validated('name'),
+            email:      $request->validated('email'),
+            phone:      $request->validated('phone'),
+            password:   $request->validated('password'),
+        );
     }
 }

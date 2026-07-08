@@ -2,6 +2,8 @@
 
 namespace App\Domains\Auth\DTOs;
 
+use App\Domains\Auth\Requests\UpdateAdminRequest;
+
 class UpdateUserDto
 {
     public function __construct(
@@ -27,5 +29,17 @@ class UpdateUserDto
             'avatar_url' => $this->avatar_url,
             'avatar_id' => $this->avatar_id,
         ], fn ($value) => $value !== null);
+    }
+
+    public static function fromRequest(UpdateAdminRequest $request): self
+    {
+        return new self(
+            first_name: $request->validated('first_name'),
+            last_name:  $request->validated('last_name'),
+            name:       $request->validated('name'),
+            email:      $request->validated('email'),
+            phone:      $request->validated('phone'),
+            password:   $request->validated('password'),
+        );
     }
 }

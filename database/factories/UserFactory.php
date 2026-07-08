@@ -14,6 +14,7 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
+        $avatar = trim("{$this->faker->lastName()}.jpg");
         return [
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
@@ -21,7 +22,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => 'papas1Conqueso12',
             'phone' => fake()->numerify('9########'),
-            'avatar' => 'https://loremflickr.com/all/?lock=' . fake()->unique()->numberBetween(1, 1000),
+            'avatar_url' => 'https://loremflickr.com/all/?lock='.$avatar,
+            'avatar_id' => $avatar,
             'is_active' => fake()->boolean(90),
             'last_login_at' => fake()->optional(0.7, null)->dateTimeBetween('-14 days', 'now'),
             'role_id' => 1, //por defecto crea un super administrador

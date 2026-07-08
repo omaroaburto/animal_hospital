@@ -8,6 +8,8 @@ use App\Domains\Auth\Actions\RestoreUserAction;
 use App\Domains\Auth\Actions\SendVerificationEmailAction;
 use App\Domains\Auth\Actions\StoreUserAction;
 use App\Domains\Auth\Actions\UpdateUserAction;
+use App\Domains\Auth\DTOs\CreateUserDto;
+use App\Domains\Auth\DTOs\UpdateUserDto;
 use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Requests\StoreAdminRequest;
 use App\Domains\Auth\Requests\UpdateAdminRequest;
@@ -27,6 +29,7 @@ class AdminController extends Controller
         $admins = $indexAdmin($request);
         return new AdminCollection($admins);
     }
+
     public function store(
         StoreAdminRequest $request,
         StoreUserAction $storeAdmin,
@@ -34,12 +37,15 @@ class AdminController extends Controller
     )//: AdminResource
     {
         Gate::authorize('createAdmin', User::class);
+        $validatedData = CreateUserDto::fromRequest($request);
         //crea usuario
-        $admin = $storeAdmin($request->validated(), 'admin');
+        $admin = $storeAdmin($validatedData, 'admin');
         //envia correo de verificación
         $sendVerification($admin);
         return new AdminResource($admin);
     }
+
+    
     public function show(
         User $admin
     ): AdminResource
@@ -47,6 +53,8 @@ class AdminController extends Controller
         Gate::authorize('view',$admin);
         return new AdminResource($admin);
     }
+
+
     public function update(
         UpdateAdminRequest $request,
         User $admin,
@@ -54,9 +62,16 @@ class AdminController extends Controller
     ): AdminResource
     {
         Gate::authorize('update',$admin);
-        $result =  $updateAdmin($request->validated(), $admin);
+        // 1. Construimos el DTO abstrayendo el mapeo del controlador
+        $validatedData = UpdateUserDto::fromRequest($request);
+
+        //Ejecutamos el Action pasándole el DTO, el modelo y el archivo físico
+        $result = $updateAdmin($validatedData, $admin, $request->file('avatar'));
+
         return new AdminResource($result);
     }
+
+
     public function destroy(
         User $admin,
         DeactivateUserAction $deactivateAdmin

@@ -22,6 +22,18 @@ return [
 
     'image_driver' => env('IMAGE_DRIVER', 'cloudinary'),
 
+    'google_drive' => [
+        'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'),
+        'credentials' => base_path(env('GOOGLE_DRIVE_CREDENTIALS_PATH')),
+    ],
+
+    'cloudflare_r2' => [
+        'key'      => env('CLOUDFLARE_R2_ACCESS_KEY_ID'),
+        'secret'   => env('CLOUDFLARE_R2_SECRET_ACCESS_KEY'),
+        'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
+        'bucket'   => env('CLOUDFLARE_R2_BUCKET_NAME'),
+        'url'      => env('CLOUDFLARE_R2_PUBLIC_URL'),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks

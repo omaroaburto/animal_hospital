@@ -1,3 +1,118 @@
+# Comando de mantenimiento del proyecto
+
+El proyecto incluye un comando Artisan que permite restaurar completamente el entorno de desarrollo. Este comando elimina las imágenes almacenadas en los diferentes proveedores de almacenamiento, reinicia la base de datos y ejecuta nuevamente todos los seeders.
+
+> **⚠️ Advertencia**
+>
+> Este comando elimina permanentemente los archivos almacenados y borra toda la base de datos mediante `migrate:fresh`.
+>
+> **Utilícelo únicamente en entornos de desarrollo o pruebas.**
+
+---
+
+# Uso
+
+```bash
+php artisan storage:clean-all-drivers
+```
+
+Al ejecutarlo se mostrará un menú interactivo para seleccionar qué almacenamiento desea limpiar.
+
+---
+
+# Opciones disponibles
+
+| Opción | Descripción |
+|:-------:|-------------|
+| **1** | Limpia todos los drivers (`public`, `google`, `s3` y `cloudinary`). |
+| **2** | Limpia únicamente el almacenamiento local (`public`). |
+| **3** | Limpia únicamente Google Drive. |
+| **4** | Limpia únicamente Cloudflare R2 / Amazon S3. |
+| **5** | Limpia únicamente Cloudinary. |
+
+---
+
+# Flujo de ejecución
+
+El comando realiza automáticamente los siguientes pasos:
+
+| Paso | Acción |
+|------|--------|
+| 1 | Solicita el almacenamiento que se desea limpiar. |
+| 2 | Solicita una confirmación antes de eliminar la información. |
+| 3 | Elimina todas las imágenes almacenadas. |
+| 4 | Recrea automáticamente las carpetas vacías. |
+| 5 | Ejecuta `php artisan migrate:fresh`. |
+| 6 | Ejecuta `php artisan db:seed`. |
+| 7 | Finaliza dejando el proyecto completamente restaurado. |
+
+---
+
+# Carpetas limpiadas
+
+Actualmente el comando elimina el contenido de las siguientes carpetas:
+
+| Carpeta | Descripción |
+|----------|-------------|
+| `avatars` | Imágenes de perfil de los usuarios. |
+| `pets` | Fotografías de las mascotas registradas. |
+| `medical_images` | Imágenes relacionadas con historiales médicos, exámenes o diagnósticos. |
+
+Después de eliminar su contenido, las carpetas son creadas nuevamente para mantener la estructura del proyecto.
+
+---
+
+# Drivers soportados
+
+| Driver | Descripción |
+|---------|-------------|
+| `public` | Almacenamiento local de Laravel (`storage/app/public`). |
+| `google` | Google Drive. |
+| `s3` | Cloudflare R2 o Amazon S3. |
+| `cloudinary` | Cloudinary. |
+
+---
+
+# Ejemplo
+
+```text
+¿Qué almacenamiento deseas vaciar por completo antes de resetear la base de datos?
+
+  [1] Todos los drivers (Limpieza Total de la App)
+  [2] Solo Local (Disco público)
+  [3] Solo Google Drive
+  [4] Solo Cloudflare R2 / S3
+  [5] Solo Cloudinary
+
+> 1
+
+⚠️ ¡ATENCIÓN! Se eliminarán los archivos físicos y se borrará toda la base de datos para volver a ejecutar los seeders.
+
+¿Deseas continuar? (yes/no) [no]:
+> yes
+
+1. Iniciando vaciado de directorios...
+2. Reseteando la base de datos...
+3. Sembrando datos de prueba...
+
+🚀 ¡Todo el entorno ha sido restaurado con éxito!
+```
+
+---
+
+# ¿Qué hace internamente?
+
+Este comando ejecuta automáticamente las siguientes operaciones:
+
+```bash
+php artisan migrate:fresh
+php artisan db:seed
+```
+
+Además elimina todos los archivos de imágenes de los drivers seleccionados y recrea las carpetas vacías para dejar el sistema listo para trabajar nuevamente.
+
+
+
 # 🏥 Animal Hospital - Gestión de Almacenamiento de Imágenes
 
 Este módulo proporciona una arquitectura flexible basada en el patrón *Strategy* para la carga, almacenamiento y eliminación de archivos de imágenes (como avatares de usuarios, fotos de mascotas, registros médicos, etc.) a través de 4 drivers distintos.

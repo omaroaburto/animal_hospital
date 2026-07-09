@@ -1,3 +1,30 @@
+## Comandos Artisan
+
+| Comando | Descripción |
+|---------|-------------|
+| `php artisan storage:clean-all-drivers` | Limpia uno o varios proveedores de almacenamiento (Local, Google Drive, Cloudflare R2/S3 y Cloudinary), elimina todas las imágenes, ejecuta `migrate:fresh` y posteriormente `db:seed`, dejando el entorno completamente restaurado para desarrollo. |
+| `php artisan make:domain {domain} {type} {name}` | Genera automáticamente artefactos dentro de un dominio siguiendo la arquitectura del proyecto. Soporta modelos, controladores, actions, requests, policies, services, resources, enums, middleware, notifications, exceptions y factories. |
+
+### Ejemplos
+
+| Acción | Comando |
+|--------|---------|
+| Crear un modelo | `php artisan make:domain Client model Client` |
+| Crear una Action | `php artisan make:domain Client action CreateClient` |
+| Crear un Service | `php artisan make:domain Client service ClientService` |
+| Crear un Request | `php artisan make:domain Client request StoreClient` |
+| Crear un Controller | `php artisan make:domain Client controller Client` |
+| Crear una Policy | `php artisan make:domain Client policy Client` |
+| Crear un Resource | `php artisan make:domain Client resource Client` |
+| Crear una Collection | `php artisan make:domain Client collection Client` |
+| Crear un Enum | `php artisan make:domain Client enum ClientStatus` |
+| Crear un Middleware | `php artisan make:domain Client middleware EnsureClientIsActive` |
+| Crear una Notification | `php artisan make:domain Client notification ClientCreated` |
+| Crear una Exception | `php artisan make:domain Client exception ClientNotFound` |
+| Crear una Factory | `php artisan make:domain Client factory Client` |
+
+
+
 # Comando de mantenimiento del proyecto
 
 El proyecto incluye un comando Artisan que permite restaurar completamente el entorno de desarrollo. Este comando elimina las imágenes almacenadas en los diferentes proveedores de almacenamiento, reinicia la base de datos y ejecuta nuevamente todos los seeders.

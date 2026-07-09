@@ -20,7 +20,7 @@ return [
     // ======================================================================
     //* Esto enlaza tu .env con el config() que lee el AppServiceProvider
 
-    'image_driver' => env('IMAGE_DRIVER', 'cloudinary'),
+    'image_driver' => env('IMAGE_DRIVER', 'local'),
 
     'google_drive' => [
         'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'),

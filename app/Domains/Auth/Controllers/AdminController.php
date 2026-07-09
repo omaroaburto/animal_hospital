@@ -39,13 +39,13 @@ class AdminController extends Controller
         Gate::authorize('createAdmin', User::class);
         $validatedData = CreateUserDto::fromRequest($request);
         //crea usuario
-        $admin = $storeAdmin($validatedData, 'admin');
+        $admin = $storeAdmin($validatedData, 'admin', $request->file('avatar'));
         //envia correo de verificación
         $sendVerification($admin);
         return new AdminResource($admin);
     }
 
-    
+
     public function show(
         User $admin
     ): AdminResource

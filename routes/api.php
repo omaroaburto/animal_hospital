@@ -3,6 +3,8 @@
 use App\domains\Auth\Controllers\AdminController;
 use App\domains\Auth\Controllers\AuthController;
 use App\domains\Auth\Controllers\RoleController;
+use App\Domains\Clients\Controllers\ClientController;
+use App\Domains\Clients\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,7 +16,15 @@ Route::post('v1/login',[AuthController::class,'login']);
 Route::post('refresh',[AuthController::class,'refresh']);
 //Verificación de email (API)
 Route::get('v1/email/verify', [AuthController::class, 'verifyEmail']);
-
+Route::get('v1/regions', [RegionController::class, 'index']);
+Route::get('v1/regions/{region}', [RegionController::class, 'show']);
+Route::get('v1/regions/{region}/communes', [RegionController::class, 'showWithCommunes']);
+Route::post('v1/register',[ClientController::class, 'store']);
+Route::get('v1/clients',[ClientController::class, 'index']);
+Route::get('v1/clients/{client}',[ClientController::class, 'show']);
+Route::match(['put','patch'],'v1/clients/{client}',[ClientController::class, 'update']);
+Route::delete('v1/clients/{client}',[ClientController::class, 'destroy']);
+Route::post('v1/clients/restore/{client}',[ClientController::class, 'restore']);
 /*************************************************************
  ***      RUTAS CON JWT Y CUENTAS VERIFICADAS (email)      ***
  *************************************************************/

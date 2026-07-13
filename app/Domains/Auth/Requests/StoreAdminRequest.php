@@ -16,7 +16,7 @@ class StoreAdminRequest extends ApiFormRequest
             'first_name' => ['required','min:3', 'max:100', 'regex:/^[\p{L}\'\s\-]+$/u'],
             'last_name'  => ['required','min:3', 'max:100', 'regex:/^[\p{L}\'\s\-]+$/u'],
             'email'      => ['required', 'email','max:100', 'unique:users,email'],
-            'password'   => ['required','string','min:8','alpha_num','max:25'],
+            'password'   => ['required','string', 'confirmed','min:8','alpha_num','max:25'],
             'phone'      => ['required','regex:/^(?:\+56)?9\d{8}$/','digits:9'],
             'avatar'     => ['nullable','image','mimes:jpeg,png,jpg,webp','max:2048'],
         ];
@@ -45,6 +45,7 @@ class StoreAdminRequest extends ApiFormRequest
             // Contraseña
             'password.required'   => 'Por favor, ingresa una contraseña.',
             'password.string'     => 'La contraseña no es válida.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
             'password.min'        => 'La contraseña debe tener al menos 8 caracteres.',
             'password.alpha_num'  => 'La contraseña debe combinar letras y números, sin símbolos especiales.',
             'password.max'        => 'La contraseña no puede tener más de 25 caracteres.',
@@ -55,9 +56,9 @@ class StoreAdminRequest extends ApiFormRequest
             'phone.digits'        => 'El número de teléfono debe tener exactamente 9 dígitos.',
 
              //avatar
-            'image.image' => 'El archivo seleccionado debe ser una imagen válida.',
-            'image.mimes' => 'La imagen debe estar en uno de los siguientes formatos: jpeg, png, jpg o webp.',
-            'image.max'   => 'La imagen es demasiado pesada. El tamaño máximo permitido es de 2 MB.',
+            'avatar.image' => 'El archivo seleccionado debe ser una imagen válida.',
+            'avatar.mimes' => 'La imagen debe estar en uno de los siguientes formatos: jpeg, png, jpg o webp.',
+            'avatar.max'   => 'La imagen es demasiado pesada. El tamaño máximo permitido es de 2 MB.',
         ];
     }
 }

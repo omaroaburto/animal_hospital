@@ -1,37 +1,36 @@
 <?php
 namespace App\Domains\Auth\DTOs;
 
-use App\Domains\Auth\Requests\StoreAdminRequest;
-
+use Illuminate\Foundation\Http\FormRequest;
 class CreateUserDto{
     public function __construct(
-        public string $first_name,
-        public string $last_name, 
+        public string $firstName,
+        public string $lastName,
         public string $email,
         public string $phone,
         public string $password,
-        public ?string $avatar_url = null,
-        public ?string $avatar_id  = null,
+        public ?string $avatarUrl = null,
+        public ?string $avatarId  = null,
     ){}
 
     public function toArray(): array
     {
         return [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
+            'first_name' => $this->firstName,
+            'last_name' => $this->lastName,
             'email' => $this->email,
             'phone' => $this->phone,
             'password' => $this->password,
-            'avatar_url' => $this->avatar_url,
-            'avatar_id' => $this->avatar_id,
+            'avatar_url' => $this->avatarUrl,
+            'avatar_id' => $this->avatarId,
         ];
     }
 
-    public static function fromRequest(StoreAdminRequest $request): self
+    public static function fromRequest(FormRequest $request): self
     {
         return new self(
-            first_name: $request->validated('first_name'),
-            last_name:  $request->validated('last_name'),
+            firstName:  $request->validated('first_name'),
+            lastName:   $request->validated('last_name'),
             email:      $request->validated('email'),
             phone:      $request->validated('phone'),
             password:   $request->validated('password'),

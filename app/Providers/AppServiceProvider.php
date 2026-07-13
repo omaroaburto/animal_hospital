@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Domains\Auth\Actions\StoreUserAction;
+use App\Domains\Auth\Contracts\StoreUserActionInterface;
 use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Policies\AdminPolicy;
 use App\Shared\Images\Contracts\ImageUploader;
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Enlace para la acción de guardar usuario que requería RegisterClientAction
+        $this->app->bind(StoreUserActionInterface::class, StoreUserAction::class);
         // Enlace polimórfico del gestor de imágenes
         $this->app->bind(ImageUploader::class, function ($app) {
 
@@ -27,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             return match ($driver) {
                 'cloudinary' => new CloudinaryUploader(),
                 'local'      => new LocalUploader(),
-                'cloudflare'   => new CloudflareUploader(),  
+                'cloudflare'   => new CloudflareUploader(),
                 'google_drive' => new GoogleDriveUploader(),
                 default => throw new \RuntimeException("El driver de imágenes [{$driver}] no está soportado o configurado."),
             };

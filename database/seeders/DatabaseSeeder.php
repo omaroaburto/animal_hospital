@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\domains\Auth\Models\Role;
 use App\domains\Auth\Models\User;
+use App\Domains\Client\Models\Client;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -37,5 +38,13 @@ class DatabaseSeeder extends Seeder
             ->admin()
             ->create();
 
+        //se cargan los datos de las regiones y comunas
+        $this->call([
+            RegionCommuneSeeder::class,
+        ]);
+        
+        Client::factory()
+            ->count(3)
+            ->create();
     }
 }

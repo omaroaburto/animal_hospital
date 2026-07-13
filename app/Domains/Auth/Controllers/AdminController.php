@@ -61,12 +61,17 @@ class AdminController extends Controller
         UpdateUserAction $updateAdmin
     ): AdminResource
     {
-        Gate::authorize('update',$admin);
-        // 1. Construimos el DTO abstrayendo el mapeo del controlador
-        $validatedData = UpdateUserDto::fromRequest($request);
+        Gate::authorize('update', $admin);
 
-        //Ejecutamos el Action pasándole el DTO, el modelo y el archivo físico
-        $result = $updateAdmin($validatedData, $admin, $request->file('avatar'));
+        $validatedData = UpdateUserDto::fromArray(
+            $request->validated()
+        );
+
+        $result = $updateAdmin(
+            $validatedData,
+            $admin,
+            $request->file('avatar')
+        );
 
         return new AdminResource($result);
     }

@@ -13,7 +13,8 @@ class UpdateUserAction implements UpdateUserActionInterface
 {
     // El constructor recibe el uploader activo dinámicamente desde el ServiceProvider
     public function __construct(
-        private ImageUploader $uploader
+        private ImageUploader $uploader,
+        private SendVerificationEmailAction $sendVerificationEmail,
     ) {}
 
     public function __invoke(
@@ -34,12 +35,47 @@ class UpdateUserAction implements UpdateUserActionInterface
             $uploadResult = $this->uploader->upload($avatarFile, 'avatars');
 
             // 4. Mutamos el DTO con los datos de la nueva imagen
-            $validatedData->avatar_url = $uploadResult->url;
-            $validatedData->avatar_id = $uploadResult->fileId;
+            $validatedData->avatarUrl = $uploadResult->url;
+            $validatedData->avatarId = $uploadResult->fileId;
         }
 
-        // 5. Ejecutamos la actualización masiva filtrada (solo lo que no sea null)
-        $user->update($validatedData->toArray());
+         /*
+        |--------------------------------------------------------------------------
+        | Cambio de correo
+        |--------------------------------------------------------------------------
+        |
+        | El email nunca se cambia directamente.
+        | Se guarda como pending_email hasta que
+        | el usuario confirme el nuevo correo.
+        |
+        */
+        $data = $validatedData->toArray();
+
+
+        $emailChanged = false;
+
+
+        if (isset($data['email']) && $data['email'] !== $user->email) {
+
+            $data['pending_email'] = $data['email'];
+
+            unset($data['email']);
+
+            $emailChanged = true;
+        }
+
+
+        $user->update($data);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Enviar verificación al nuevo correo
+        |--------------------------------------------------------------------------
+        */
+        if ($emailChanged) {
+            ($this->sendVerificationEmail)($user->refresh());
+        }
+
 
         return $user->refresh();
     }

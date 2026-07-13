@@ -10,17 +10,29 @@ class VerifyEmailAction
     public function __invoke(array $validatedData): User
     {
         $user = User::where('verification_token', $validatedData['token'])->first();
-        
+
         if (!$user) {
             throw ValidationException::withMessages([
                 'token' => 'Token inválido o expirado'
             ]);
         }
 
-        $user->update([
-            'email_verified_at' => now(),
-            'verification_token' => null,
-        ]);
-        return $user;
+        /*
+        |--------------------------------------------------------------------------
+        | Confirmación de correo
+        |--------------------------------------------------------------------------
+        |
+        | Si existe pending_email:
+        |   pending_email -> email
+        |
+        | Si no existe:
+        |   solo marca email como verificado
+        |
+        */
+
+        $user->markEmailAsVerified();
+
+
+        return $user->refresh();
     }
 }

@@ -1,0 +1,202 @@
+{
+  "species": [
+    {
+      "name": "Perro",
+      "breeds": [
+        "Mestizo",
+        "Labrador Retriever",
+        "Golden Retriever",
+        "Pastor Alemán",
+        "Poodle",
+        "Bulldog Francés",
+        "Chihuahua",
+        "Yorkshire Terrier",
+        "Beagle",
+        "Border Collie",
+        "Cocker Spaniel Inglés",
+        "Rottweiler"
+      ]
+    },
+    {
+      "name": "Gato",
+      "breeds": [
+        "Común Europeo",
+        "Siamés",
+        "Persa",
+        "Maine Coon",
+        "British Shorthair",
+        "Ragdoll",
+        "Bengalí",
+        "Sphynx"
+      ]
+    },
+    {
+      "name": "Conejo",
+      "breeds": [
+        "Cabeza de León",
+        "Mini Lop",
+        "Holland Lop",
+        "Rex",
+        "Neozelandés",
+        "Holandés"
+      ]
+    },
+    {
+      "name": "Hurón",
+      "breeds": [
+        "Estándar"
+      ]
+    },
+    {
+      "name": "Cobayo",
+      "breeds": [
+        "Americano",
+        "Abisinio",
+        "Peruano",
+        "Sheltie",
+        "Coronet"
+      ]
+    },
+    {
+      "name": "Chinchilla",
+      "breeds": [
+        "Estándar Gris",
+        "Blanca Wilson",
+        "Beige",
+        "Ébano"
+      ]
+    },
+    {
+      "name": "Hámster",
+      "breeds": [
+        "Sirio",
+        "Ruso Enano",
+        "Roborovski",
+        "Campbell"
+      ]
+    },
+    {
+      "name": "Periquito Australiano",
+      "breeds": [
+        "Común",
+        "Inglés"
+      ]
+    },
+    {
+      "name": "Canario",
+      "breeds": [
+        "Timbrado Español",
+        "Gloster",
+        "Border",
+        "Roller"
+      ]
+    },
+    {
+      "name": "Ninfa",
+      "breeds": [
+        "Gris",
+        "Lutina",
+        "Perlada",
+        "Cara Blanca"
+      ]
+    },
+    {
+      "name": "Tortuga",
+      "breeds": [
+        "Tortuga de Orejas Rojas",
+        "Tortuga Pintada",
+        "Tortuga Rusa"
+      ]
+    },
+    {
+      "name": "Gecko Leopardo",
+      "breeds": [
+        "Normal",
+        "Albino",
+        "Blizzard",
+        "Mack Snow"
+      ]
+    },
+    {
+      "name": "Dragón Barbudo",
+      "breeds": [
+        "Estándar",
+        "Leatherback",
+        "Hypomelanistic"
+      ]
+    },
+    {
+      "name": "Bovino",
+      "breeds": [
+        "Holstein",
+        "Jersey",
+        "Hereford",
+        "Angus",
+        "Overo Colorado",
+        "Clavel Alemán"
+      ]
+    },
+    {
+      "name": "Ovino",
+      "breeds": [
+        "Suffolk",
+        "Corriedale",
+        "Merino",
+        "Texel",
+        "Romney Marsh"
+      ]
+    },
+    {
+      "name": "Caprino",
+      "breeds": [
+        "Saanen",
+        "Alpina",
+        "Toggenburg",
+        "Boer"
+      ]
+    },
+    {
+      "name": "Porcino",
+      "breeds": [
+        "Large White",
+        "Landrace",
+        "Duroc",
+        "Pietrain"
+      ]
+    },
+    {
+      "name": "Equino",
+      "breeds": [
+        "Caballo Chileno",
+        "Criollo",
+        "Árabe",
+        "Cuarto de Milla",
+        "Pura Sangre Inglés"
+      ]
+    },
+    {
+      "name": "Gallina",
+      "breeds": [
+        "Leghorn",
+        "Rhode Island Red",
+        "Sussex",
+        "Plymouth Rock"
+      ]
+    },
+    {
+      "name": "Pavo",
+      "breeds": [
+        "Bronce",
+        "Blanco de Pechuga Ancha"
+      ]
+    },
+    {
+      "name": "Pato",
+      "breeds": [
+        "Pekín",
+        "Khaki Campbell",
+        "Muscovy"
+      ]
+    }
+  ]
+}

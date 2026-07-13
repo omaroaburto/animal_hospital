@@ -3,11 +3,14 @@
 namespace App\Domains\Auth\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Domains\Clients\Models\Client;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -26,6 +29,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'avatar_url',
         'avatar_id',
         'is_active',
+        'pending_email',
         'last_login_at',
         'email_verified_at',
         'verification_token',
@@ -37,7 +41,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'last_login_at',
         'created_at',
         'updated_at',
-        'deleated_at'
+        'deleted_at'
     ];
 
     protected function casts(): array
@@ -48,8 +52,14 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         ];
     }
 
-    public function role(): BelongsTo{
+    public function role(): BelongsTo
+    {
         return $this->belongsTo(Role::class);
+    }
+
+    public function client(): HasOne
+    {
+        return $this->hasOne(Client::class);
     }
     /*************************************
      *            factory                *
@@ -84,7 +94,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
         return $token;
     }
-
+   /*
     public function markEmailAsVerified(): void
     {
         $this->update([
@@ -92,9 +102,26 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             'verification_token' => null,
         ]);
     }
+    */
+    public function markEmailAsVerified(): void
+    {
+        if ($this->pending_email !== null) {
+            $this->email = $this->pending_email;
+            $this->pending_email = null;
+        }
+
+        $this->email_verified_at = now();
+        $this->verification_token = null;
+
+        $this->save();
+    }
+    /*public function hasVerifiedEmailCustom(): bool
+    {
+        return !is_null($this->email_verified_at);
+    }*/
 
     public function hasVerifiedEmailCustom(): bool
     {
-        return !is_null($this->email_verified_at);
+        return $this->email_verified_at !== null;
     }
 }

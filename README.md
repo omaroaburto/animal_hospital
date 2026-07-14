@@ -1,5 +1,22 @@
 ## Comandos Artisan
 
+
+### Ejecutar servidor
+```
+php artisan queue:work
+```
+
+### Ejecutar worker
+
+Laravel utiliza colas para procesar tareas en segundo plano, como el envío de correos de recuperación de contraseña y otras notificaciones.
+
+Para iniciar el worker de colas ejecutar:
+
+```bash
+php artisan queue:work
+```
+
+
 | Comando | Descripción |
 |---------|-------------|
 | `php artisan storage:clean-all-drivers` | Limpia uno o varios proveedores de almacenamiento (Local, Google Drive, Cloudflare R2/S3 y Cloudinary), elimina todas las imágenes, ejecuta `migrate:fresh` y posteriormente `db:seed`, dejando el entorno completamente restaurado para desarrollo. |
@@ -178,3 +195,13 @@ CLOUDINARY_URL=cloudinary://tu_api_key:tu_api_secret@tu_cloud_name
 CLOUDINARY_CLOUD_NAME=tu_cloud_name
 CLOUDINARY_API_KEY=tu_api_key
 CLOUDINARY_API_SECRET=tu_api_secret
+
+```
+
+---
+
+## CONFIGURACIÓN DE INTENTOS DIARIOS DE RESETEO DE PASSWORD ```.env```
+
+```env
+PASSWORD_RESET_MAX_ATTEMPTS=3
+PASSWORD_RESET_DECAY_SECONDS=86400

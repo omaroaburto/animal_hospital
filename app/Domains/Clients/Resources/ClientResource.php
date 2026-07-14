@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Domains\Clients\Resources;
- 
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -10,6 +10,7 @@ class ClientResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->id,
 
@@ -20,7 +21,7 @@ class ClientResource extends JsonResource
             'phone' => $this->whenLoaded('user', fn () => $this->user->phone),
             'avatar_url' => $this->whenLoaded('user', fn () => $this->user->avatar_url),
             'avatar_id' => $this->whenLoaded('user', fn () => $this->user->avatar_id),
-            'is_active' => $this->whenLoaded('user', fn () => $this->user->is_active),
+            'is_active' => $this->whenLoaded('user', fn () => ($this->user->is_active===1)),
 
             // Client
             'document_type' => $this->document_type,

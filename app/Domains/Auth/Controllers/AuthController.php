@@ -6,11 +6,17 @@ use App\Domains\Auth\Actions\LoginAction;
 use App\Domains\Auth\Actions\LogoutAction;
 use App\Domains\Auth\Actions\RefreshTokenAction;
 use App\Domains\Auth\Actions\VerifyEmailAction;
+use App\Domains\Auth\Actions\ForgotPasswordAction;
+use App\Domains\Auth\Actions\ResetPasswordAction;
+use App\Domains\Auth\Requests\ForgotPasswordRequest;
 use App\Domains\Auth\Requests\LoginRequest;
+use App\Domains\Auth\Requests\ResetPasswordRequest;
 use App\Domains\Auth\Requests\VerifyEmailRequest;
 use App\Domains\Auth\Resources\LoginResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Password;
+use Symfony\Component\HttpFoundation\Response;
 //use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
@@ -47,35 +53,39 @@ class AuthController extends Controller
     {
         try {
             $user = $verifyEmail($request->validated());
-            return view('emails.verified', compact('user'));   
-        } catch (\Exception $e) { 
+            return view('emails.verified', compact('user'));
+        } catch (\Exception $e) {
             return view('emails.errors.invalid-token', [
-                'message' => $e->getMessage()  
+                'message' => $e->getMessage()
             ]);
         }
     }
 
-    /* 
-    
-    public function verifyEmail(
-            VerifyEmailRequest $request,
-            VerifyEmailAction $verifyEmail
-        ): RedirectResponse {
-            
-            $frontendUrl = config('app.frontend_url', 'http://localhost:4200'); // Tu url de Angular/React
+    public function forgotPassword(
+        ForgotPasswordRequest $request,
+        ForgotPasswordAction $forgotPasswordAction,
+    ): JsonResponse
+    {
+        $forgotPasswordAction($request->validated('email'));
+        return response()->json([
+            "message" => "Si el correo está registrado, recibirás un enlace para restablecer tu contraseña."
+        ], Response::HTTP_OK);
+    }
 
-            try {
-                // Ejecutamos la lógica de negocio
-                $user = $verifyEmail($request->validated());
-                
-                // Redirigimos al frontend con estado exitoso
-                return redirect()->to("{$frontendUrl}/email-verification?status=success");
-
-            } catch (Exception $e) {
-                // Redirigimos al frontend con el mensaje de error de la excepción
-                $message = urlencode($e->getMessage());
-                return redirect()->to("{$frontendUrl}/email-verification?status=error&message={$message}");
-            }
+    public function resetPassword(
+        ResetPasswordRequest $request,
+        ResetPasswordAction $resetPasswordAction
+    ): JsonResponse
+    {
+        $status = $resetPasswordAction($request->validated());
+        if($status === Password::PASSWORD_RESET){
+            return response()->json([
+                'message' => 'La contraseña se ha restablecido correctamente.',
+            ], Response::HTTP_OK);
         }
-    */
+
+        return response()->json([
+            'message' => 'El enlace de restablecimiento no es válido o ha expirado.',
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
 }

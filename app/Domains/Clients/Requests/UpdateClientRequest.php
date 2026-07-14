@@ -15,6 +15,7 @@ class UpdateClientRequest extends ApiFormRequest
 
     public function rules(): array
     {
+         
         $isPut = $this->isMethod('PUT');
 
         $client = $this->route('client');

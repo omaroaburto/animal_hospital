@@ -15,18 +15,17 @@ class UpdateClientProfileAction
     public function __construct(
         public UpdateUserActionInterface $updateUser,
         public UpdateClientAction $updateClient,
-        public SendVerificationEmailAction $sendEmail
     ){}
     public function __invoke(UpdateClientRequest $request, Client $clientTarget ) {
         $client = DB::transaction(function () use ($request, $clientTarget){
+
             $requestValidated = $request->validated();
+            $avatar = $requestValidated['avatar'] ?? null;
             $validatedDataUser = UpdateUserDto::fromArray($requestValidated);
-            $avatar = $requestValidated->file('avatar');
-            $user= ($this->updateUser)($validatedDataUser, $avatar);
+            $user= ($this->updateUser)($validatedDataUser,$clientTarget->user, $avatar);
             $validatedDataClient = UpdateClientDto::fromRequest($request, $user->id);
             return ($this->updateClient)($validatedDataClient, $clientTarget);
-        });
-        ($this->sendEmail)($client->user);
+        }); 
         return $client->load(['commune.region', 'user']);
     }
 }

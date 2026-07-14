@@ -59,7 +59,7 @@ class CleanImagesCommand extends Command
         $this->info("\n1. Iniciando vaciado de directorios de imágenes...");
 
         // Define aquí todas las carpetas de imágenes que use tu hospital veterinario
-        $carpetasDeImagenes = ['avatars', 'pets', 'medical_images'];
+        $carpetasDeImagenes = ['avatars', 'pets', 'medical_images', 'products'];
 
         foreach ($discosAProcesar as $disco) {
             try {

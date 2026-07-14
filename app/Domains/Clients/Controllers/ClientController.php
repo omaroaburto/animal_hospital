@@ -14,8 +14,10 @@ use App\Domains\Clients\Requests\UpdateClientRequest;
 use App\Domains\Clients\Resources\ClientCollection;
 use App\Domains\Clients\Resources\ClientResource;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ClientController extends Controller
 {
@@ -26,6 +28,7 @@ class ClientController extends Controller
         IndexClientAction $indexClient,
     )
     {
+        Gate::authorize('anyView', Client::class);
         $result = $indexClient($request);
         return new ClientCollection($result);
     }
@@ -50,6 +53,7 @@ class ClientController extends Controller
         ShowClientAction $showClient,
     ): ClientResource
     {
+        Gate::authorize('view', $client);
         $result = $showClient($client);
         return new ClientResource($result);
     }
@@ -61,6 +65,7 @@ class ClientController extends Controller
         UpdateClientProfileAction $updateClientProfile,
     ): ClientResource
     {
+        Gate::authorize('update', $client);
         $result = $updateClientProfile($request, $client);
         return new ClientResource($result);
     }
@@ -69,8 +74,9 @@ class ClientController extends Controller
     public function destroy(
         Client $client,
         DeactiveClientAction $deactiveClient,
-    )
+    ): JsonResponse
     {
+        Gate::authorize('delete', $client);
         $deactiveClient($client);
         return response()->json([
             'success' => true,
@@ -84,6 +90,7 @@ class ClientController extends Controller
         RestoreClientAction $restoreClient,
     )
     {
+        Gate::authorize('restore', $client);
         $restoreClient($client);
         return response()->json([
             'success' => true,

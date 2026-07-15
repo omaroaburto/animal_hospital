@@ -3,18 +3,18 @@
 namespace Database\Factories;
 
 use App\Domains\Auth\Models\User;
-use App\Domains\Client\Enums\DocumentType;
-use App\Domains\Client\Models\Client;
-use App\Domains\Client\Models\Commune;
+use App\Domains\Clients\Enums\DocumentType;
+use App\Domains\Clients\Models\Client;
+use App\Domains\Clients\Models\Commune;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
- 
+
 class ClientFactory extends Factory
 {
     protected $model = Client::class;
     public function definition(): array
     {
-        /*Determinar el tipo de documento basándonos 
+        /*Determinar el tipo de documento basándonos
          * en porcentajes (80% RUT, 20% PASSPORT)
          *fake()->boolean(80) devuelve verdadero el 80% de las veces*/
         $documentType = fake()->boolean(80) ? DocumentType::RUT : DocumentType::PASSPORT;
@@ -40,7 +40,7 @@ class ClientFactory extends Factory
     private function generateValidRut(): string
     {
         $number = fake()->numberBetween(5000000, 25000000);
-        
+
         // Calcular dígito verificador (Algoritmo Módulo 11)
         $rutArr = array_reverse(str_split($number));
         $factor = 2;

@@ -30,19 +30,12 @@ class StoreRoleRequest extends FormRequest
         ];
     }
 
+
     public function messages(): array
     {
-        return [
-            'name.required' => 'El nombre del rol es obligatorio.',
-            'name.string' => 'Ingresa un formato válido para el nombre del rol.',
-            'name.max' => 'El nombre del rol no puede tener más de 50 letras.',
+        return array_merge($this->commonMessages(), [
             'name.regex' => 'El nombre del rol no debe contener números ni espacios en blanco.',
-            'name.unique' => 'No puede ingresar un nombre de rolque está registrado.',
-
-            //descripción
-            'description.min' => 'La descripción del rol debe tener al menos 10 caracteres si decide completarla.',
-            'description.max' => 'La descripción del rol debe tener como máximo 255 caracteres si decide completarla.',
             'description.regex' => 'La descripción solo puede contener letras, números, espacios, puntos y comas.',
-        ];
+        ]);
     }
 }

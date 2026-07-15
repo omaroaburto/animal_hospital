@@ -2,7 +2,7 @@
 
 namespace App\Domains\Auth\Requests;
 
-use App\Http\Requests\ApiFormRequest; 
+use App\Http\Requests\ApiFormRequest;
 
 class UpdateRoleRequest extends ApiFormRequest
 {
@@ -43,18 +43,9 @@ class UpdateRoleRequest extends ApiFormRequest
 
     public function messages(): array
     {
-        return [
-            'name.required' => 'El nombre del rol es obligatorio.',
-            'name.string' => 'Ingresa un formato válido para el nombre del rol.',
-            'name.max' => 'El nombre del rol no puede tener más de 50 caracteres.',
-            'name.regex' => 'El nombre del rol solo puede contener letras.',
-            'name.unique' => 'No puede ingresar un nombre de rol que ya está registrado.',
-
-            // Descripción
-            'description.string' => 'Ingresa un formato válido para la descripción.',
-            'description.min' => 'La descripción del rol debe tener al menos 10 caracteres si decide completarla.',
-            'description.max' => 'La descripción del rol debe tener como máximo 255 caracteres si decide completarla.',
+        return array_merge($this->commonMessages(), [
+            'name.regex' => 'El nombre del rol no debe contener números ni espacios en blanco.',
             'description.regex' => 'La descripción solo puede contener letras, números, espacios, puntos y comas.',
-        ];
+        ]);
     }
 }

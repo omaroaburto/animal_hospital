@@ -2,6 +2,7 @@
   "species": [
     {
       "name": "Perro",
+      "scientific_name": "Canis lupus familiaris",
       "breeds": [
         "Mestizo",
         "Labrador Retriever",
@@ -19,7 +20,9 @@
     },
     {
       "name": "Gato",
+      "scientific_name": "Felis catus",
       "breeds": [
+        "Mestizo",
         "Común Europeo",
         "Siamés",
         "Persa",
@@ -32,7 +35,9 @@
     },
     {
       "name": "Conejo",
+      "scientific_name": "Oryctolagus cuniculus",
       "breeds": [
+        "Mestizo",
         "Cabeza de León",
         "Mini Lop",
         "Holland Lop",
@@ -43,12 +48,14 @@
     },
     {
       "name": "Hurón",
+      "scientific_name": "Mustela putorius furo",
       "breeds": [
         "Estándar"
       ]
     },
     {
       "name": "Cobayo",
+      "scientific_name": "Cavia porcellus",
       "breeds": [
         "Americano",
         "Abisinio",
@@ -59,6 +66,7 @@
     },
     {
       "name": "Chinchilla",
+      "scientific_name": "Chinchilla lanigera",
       "breeds": [
         "Estándar Gris",
         "Blanca Wilson",
@@ -68,7 +76,9 @@
     },
     {
       "name": "Hámster",
+      "scientific_name": "Mesocricetus auratus",
       "breeds": [
+        "Mestizo",
         "Sirio",
         "Ruso Enano",
         "Roborovski",
@@ -77,6 +87,7 @@
     },
     {
       "name": "Periquito Australiano",
+      "scientific_name": "Melopsittacus undulatus",
       "breeds": [
         "Común",
         "Inglés"
@@ -84,6 +95,7 @@
     },
     {
       "name": "Canario",
+      "scientific_name": "Serinus canaria domestica",
       "breeds": [
         "Timbrado Español",
         "Gloster",
@@ -93,6 +105,7 @@
     },
     {
       "name": "Ninfa",
+      "scientific_name": "Nymphicus hollandicus",
       "breeds": [
         "Gris",
         "Lutina",
@@ -102,6 +115,7 @@
     },
     {
       "name": "Tortuga",
+      "scientific_name": "Testudines",
       "breeds": [
         "Tortuga de Orejas Rojas",
         "Tortuga Pintada",
@@ -110,6 +124,7 @@
     },
     {
       "name": "Gecko Leopardo",
+      "scientific_name": "Eublepharis macularius",
       "breeds": [
         "Normal",
         "Albino",
@@ -119,6 +134,7 @@
     },
     {
       "name": "Dragón Barbudo",
+      "scientific_name": "Pogona vitticeps",
       "breeds": [
         "Estándar",
         "Leatherback",
@@ -127,7 +143,9 @@
     },
     {
       "name": "Bovino",
+      "scientific_name": "Bos taurus",
       "breeds": [
+        "Mestizo",
         "Holstein",
         "Jersey",
         "Hereford",
@@ -138,7 +156,9 @@
     },
     {
       "name": "Ovino",
+      "scientific_name": "Ovis aries",
       "breeds": [
+        "Mestizo",
         "Suffolk",
         "Corriedale",
         "Merino",
@@ -148,7 +168,9 @@
     },
     {
       "name": "Caprino",
+      "scientific_name": "Capra hircus",
       "breeds": [
+        "Mestizo",
         "Saanen",
         "Alpina",
         "Toggenburg",
@@ -157,7 +179,9 @@
     },
     {
       "name": "Porcino",
+      "scientific_name": "Sus scrofa domesticus",
       "breeds": [
+        "Mestizo",
         "Large White",
         "Landrace",
         "Duroc",
@@ -166,7 +190,9 @@
     },
     {
       "name": "Equino",
+      "scientific_name": "Equus ferus caballus",
       "breeds": [
+        "Mestizo",
         "Caballo Chileno",
         "Criollo",
         "Árabe",
@@ -176,7 +202,9 @@
     },
     {
       "name": "Gallina",
+      "scientific_name": "Gallus gallus domesticus",
       "breeds": [
+        "Mestizo",
         "Leghorn",
         "Rhode Island Red",
         "Sussex",
@@ -185,6 +213,7 @@
     },
     {
       "name": "Pavo",
+      "scientific_name": "Meleagris gallopavo domesticus",
       "breeds": [
         "Bronce",
         "Blanco de Pechuga Ancha"
@@ -192,6 +221,7 @@
     },
     {
       "name": "Pato",
+      "scientific_name": "Anas platyrhynchos domesticus",
       "breeds": [
         "Pekín",
         "Khaki Campbell",

@@ -17,6 +17,7 @@ class Pet extends Model
 
     protected $fillable = [
         'id',
+        'name',
         'client_id',
         'breed_id',
         'gender',
@@ -41,12 +42,12 @@ class Pet extends Model
     public function casts(): array
     {
         return [
-            'gender'=> Gender::class,
+            'gender'     => Gender::class,
             'birth_date' => 'immutable_date',
             'death_date' => 'immutable_date',
-            'microchip' => 'boolean',
+            'microchip'  => 'boolean',
             'sterilized' => 'boolean',
-            'is_active' => 'boolean'
+            'is_active'  => 'boolean'
         ];
     }
     protected static function newFactory(): Factory

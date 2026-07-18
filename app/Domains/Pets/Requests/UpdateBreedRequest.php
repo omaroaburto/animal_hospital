@@ -5,7 +5,7 @@ namespace App\Domains\Pets\Requests;
 use App\Http\Requests\ApiFormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateSpeciesRequest extends ApiFormRequest
+class UpdateBreedRequest extends ApiFormRequest
 {
     public function authorize(): bool
     {

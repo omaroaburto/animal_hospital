@@ -1,30 +1,30 @@
 <?php
 
 namespace App\Domains\Auth\Actions;
-use Illuminate\Http\Request;
-use App\domains\Auth\Models\User;
-use Illuminate\Support\Collection;
+
+use App\Domains\Auth\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class IndexUserAction
 {
-    public function __invoke(Request $request): Collection 
+    public function __invoke(array $filters): Collection|LengthAwarePaginator
     {
-        
-        $perPage = $request->query('per_page', 10);
-        $page    = $request->query('page', 1);
-        
-        $adminUsers = User::whereHas('role', function($query){
-            $query->where('name','admin');
+        $query = User::whereHas('role', function ($q) {
+            $q->where('name', 'admin');
         })
         ->with('role')
-        ->when($request->has('is_active'), function($query) use ($request) { 
-            $query->where('is_active', $request->boolean('is_active'));
-        })
-        ->paginate(
-            perPage: $perPage,
-            page: $page
-        );
+        // Filtro condicional para is_active usando el array sanitizado
+        ->when(array_key_exists('is_active', $filters) && $filters['is_active'] !== null, function ($q) use ($filters) {
+            $q->where('is_active', $filters['is_active']);
+        });
 
-        return $adminUsers->getCollection();
+        // Retorno dinámico consistente (all vs pagination)
+        return !empty($filters['all'])
+            ? $query->get()
+            : $query->paginate(
+                perPage: $filters['per_page'] ?? 10,
+                page: $filters['page'] ?? 1
+            );
     }
 }

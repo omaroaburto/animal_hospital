@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Domains\Auth\Policies;
- 
+
 use App\Domains\Auth\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
@@ -33,12 +33,15 @@ class AdminPolicy
 
     public function view(User $user, User $adminTarget): Response
     {
-        if($adminTarget->role?->name !== 'admin'){
+        if($adminTarget->role?->name !== 'admin')
+        {
             return Response::deny('El usuario solicitado no pertenece al grupo de administradores.');
         }
-        if($user->role->name === 'superadmin'){
+        if($user->role->name === 'superadmin')
+        {
             return Response::allow();
         }
+
         return $user->id === $adminTarget->id
             ? Response::allow()
             : Response::deny('No tienes permisos para ver la información de otros administradores');
@@ -52,10 +55,13 @@ class AdminPolicy
     }
     public function update(User $user, User $adminTarget): Response
     {
-        if($adminTarget->role?->name !== 'admin'){
+        if($adminTarget->role?->name !== 'admin')
+        {
             return Response::deny('El usuario solicitado no pertenece al grupo de administradores.');
         }
-        if($user->role->name === 'superadmin'){
+        
+        if($user->role->name === 'superadmin')
+        {
             return Response::allow();
         }
 
@@ -67,12 +73,16 @@ class AdminPolicy
     }
     public function delete(User $user, User $adminTarget): Response
     {
-        if($adminTarget->role?->name !== 'admin'){
+        if($adminTarget->role?->name !== 'admin')
+        {
             return Response::deny('El usuario solicitado no pertenece al grupo de administradores.');
         }
-        if(!$adminTarget->is_active){
+
+        if(!$adminTarget->is_active)
+        {
             return Response::deny('El usuario solicitado ya está desactivado');
         }
+
         return $user->role->name === 'superadmin'
             ? Response::allow()
             : Response::deny('Necesitas permisos de superadmin para desactivar un administrador.');
@@ -80,12 +90,16 @@ class AdminPolicy
     }
     public function restore(User $user, User $adminTarget): Response
     {
-        if($adminTarget->role?->name !== 'admin'){
+        if($adminTarget->role?->name !== 'admin')
+        {
             return Response::deny('El usuario solicitado no pertenece al grupo de administradores.');
         }
-        if($adminTarget->is_active){
+
+        if($adminTarget->is_active)
+        {
             return Response::deny('El usuario solicitado ya está activado');
         }
+
         return $user->role->name === 'superadmin'
             ? Response::allow()
             : Response::deny('Necesitas permisos de superadmin para desactivar un administrador.');

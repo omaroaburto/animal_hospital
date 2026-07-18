@@ -16,6 +16,7 @@ use App\Domains\Auth\Requests\UpdateAdminRequest;
 use App\Domains\Auth\Resources\AdminCollection;
 use App\Domains\Auth\Resources\AdminResource;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BaseIndexFilterRequest as IndexRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -23,10 +24,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
-    public function index(Request $request, IndexUserAction $indexAdmin): AdminCollection
+    public function index(
+        IndexRequest $request, 
+        IndexUserAction $indexAdmin
+    ): AdminCollection
     {
         Gate::authorize('viewAny', User::class);
-        $admins = $indexAdmin($request);
+        $admins = $indexAdmin($request->validated());
         return new AdminCollection($admins);
     }
 

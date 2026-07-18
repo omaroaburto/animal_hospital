@@ -32,9 +32,11 @@ class RolePolicy
 
     public function update(User $user, Role $role): Response
     {
-        if($role->name === "superadmin"){
+        if($role->name === "superadmin")
+        {
             return Response::deny("El súper admininistrador no puede ser modificado");
         }
+        
         return $user->role->name === "superadmin"
             ? Response::allow()
             : Response::deny('No tienes permisos de súper administrador para actualizar los roles.');

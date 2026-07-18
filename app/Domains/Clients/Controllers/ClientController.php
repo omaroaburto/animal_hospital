@@ -14,6 +14,7 @@ use App\Domains\Clients\Requests\UpdateClientRequest;
 use App\Domains\Clients\Resources\ClientCollection;
 use App\Domains\Clients\Resources\ClientResource;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BaseIndexFilterRequest as IndexRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -24,12 +25,12 @@ class ClientController extends Controller
 
     //lista cliente
     public function index(
-        Request $request,
+        IndexRequest $request,
         IndexClientAction $indexClient,
     )
     {
         Gate::authorize('anyView', Client::class);
-        $result = $indexClient($request);
+        $result = $indexClient($request->validated());
         return new ClientCollection($result);
     }
 

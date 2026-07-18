@@ -6,10 +6,20 @@ use App\Domains\Auth\Actions\StoreUserAction;
 use App\Domains\Auth\Actions\UpdateUserAction;
 use App\Domains\Auth\Contracts\StoreUserActionInterface;
 use App\Domains\Auth\Contracts\UpdateUserActionInterface;
+use App\Domains\Auth\Models\Role;
 use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Policies\AdminPolicy;
+use App\Domains\Auth\Policies\RolePolicy;
 use App\Domains\Clients\Models\Client;
 use App\Domains\Clients\Policies\ClientPolicy;
+use App\Domains\Pets\Actions\GetPetsByClientAction;
+use App\Domains\Pets\Contracts\ClientPetRepositoryInterface;
+use App\Domains\Pets\Models\Breed;
+use App\Domains\Pets\Models\Pet;
+use App\Domains\Pets\Models\Species;
+use App\Domains\Pets\Policies\BreedPolicy;
+use App\Domains\Pets\Policies\PetPolicy;
+use App\Domains\Pets\Policies\SpeciesPolicy;
 use App\Shared\Images\Contracts\ImageUploader;
 use App\Shared\Images\Services\CloudflareUploader;
 use App\Shared\Images\Services\CloudinaryUploader;
@@ -28,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
         // Enlace para la acción de guardar usuario que requería RegisterClientAction
         $this->app->bind(StoreUserActionInterface::class, StoreUserAction::class);
         $this->app->bind(UpdateUserActionInterface::class, UpdateUserAction::class);
+        $this->app->bind(ClientPetRepositoryInterface::class, GetPetsByClientAction::class);
         // Enlace polimórfico del gestor de imágenes
         $this->app->bind(ImageUploader::class, function ($app) {
 
@@ -49,6 +60,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(User::class, AdminPolicy::class);
+        Gate::policy(Role::class, RolePolicy::class);
         Gate::policy(Client::class, ClientPolicy::class);
+        Gate::policy(Pet::class, PetPolicy::class);
+        Gate::policy(Breed::class, BreedPolicy::class);
+        Gate::policy(Species::class, SpeciesPolicy::class);
     }
 }

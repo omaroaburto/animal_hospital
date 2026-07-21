@@ -20,11 +20,12 @@ class IndexUserAction
         });
 
         // Retorno dinámico consistente (all vs pagination)
-        return !empty($filters['all'])
+        $users = !empty($filters['all'])
             ? $query->get()
             : $query->paginate(
                 perPage: $filters['per_page'] ?? 10,
                 page: $filters['page'] ?? 1
             );
+        return $users->getCollection();
     }
 }

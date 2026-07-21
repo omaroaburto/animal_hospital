@@ -3,7 +3,8 @@
 namespace App\Domains\Pets\Controllers;
 
 use App\Domains\Pets\Actions\DeleteBreedAction;
-use App\Domains\Pets\Actions\IndexBreedAction; 
+use App\Domains\Pets\Actions\GetPetsByBreedAction as GetPetsByBreed;
+use App\Domains\Pets\Actions\IndexBreedAction;
 use App\Domains\Pets\Actions\StoreBreedAction;
 use App\Domains\Pets\Actions\UpdateBreedAction;
 use App\Domains\Pets\Models\Breed;
@@ -12,10 +13,10 @@ use App\Domains\Pets\Requests\StoreBreedRequest;
 use App\Domains\Pets\Requests\UpdateBreedRequest;
 use App\Domains\Pets\Resources\BreedCollection;
 use App\Domains\Pets\Resources\BreedResource;
+use App\Domains\Pets\Resources\PetCollection;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BaseIndexFilterRequest as IndexRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
@@ -41,7 +42,7 @@ class BreedController extends Controller
     }
 
     public function show(
-        Breed $breed, 
+        Breed $breed,
     ): BreedResource
     {
         $breed->load(['species']);
@@ -49,14 +50,14 @@ class BreedController extends Controller
     }
 
     public function update(
-        UpdateBreedRequest $request, 
+        UpdateBreedRequest $request,
         Breed $breed,
         UpdateBreedAction $updateBreed,
     ): BreedResource
     {
         Gate::authorize('update', $breed);
         $result = $updateBreed($request->validated(), $breed);
-        return new BreedResource($result); 
+        return new BreedResource($result);
     }
 
     public function destroy(
@@ -76,5 +77,16 @@ class BreedController extends Controller
             'total_pets_updated' => $result['pets_updated'],
             'message' => "Se reasignaron {$result['pets_updated']} mascotas de la raza {$result['old_breed']} a {$result['new_breed']}. La raza original fue eliminada correctamente.",
         ], Response::HTTP_OK);
+    }
+
+    public function indexBreedPet(
+        IndexRequest $request,
+        Breed $breed,
+        GetPetsByBreed $getPetsByBreed,
+    ): PetCollection
+    {
+        Gate::authorize('getPet', $breed);
+        $pets = $getPetsByBreed($request->validated(), $breed->id);
+        return new PetCollection($pets);
     }
 }

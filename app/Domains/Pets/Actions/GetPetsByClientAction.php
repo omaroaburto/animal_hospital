@@ -4,7 +4,7 @@ namespace App\Domains\Pets\Actions;
 
 use App\Domains\Pets\Contracts\ClientPetRepositoryInterface;
 use App\Domains\Pets\Models\Pet;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class GetPetsByClientAction implements ClientPetRepositoryInterface
 {
@@ -14,7 +14,7 @@ class GetPetsByClientAction implements ClientPetRepositoryInterface
         $page     = $filters['page'] ?? 1;
 
         return Pet::query()
-            ->with(['breed.species', 'client'])
+            ->with(['breed.species'])
             ->where('client_id', $clientId) // Usamos el ID recibido del cliente
             ->when(array_key_exists('is_active', $filters), function ($query) use ($filters) {
                 return $query->where('is_active', $filters['is_active']);

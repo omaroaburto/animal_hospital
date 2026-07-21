@@ -52,7 +52,6 @@ class PetController extends Controller
         return new PetResource($result);
     }
 
-    // TODO
     public function update(
         UpdatePetRequest $request,
         Pet $pet,
@@ -69,7 +68,7 @@ class PetController extends Controller
         DeactivatePetAction $deactivePet
     )
     {
-        Gate::authorize('delete', $pet);
+        Gate::authorize('deactivate', $pet);
         $petName = $deactivePet($pet);
         return response()->json([
             'message' => "Se ha desactivo la mascota {$petName}.",

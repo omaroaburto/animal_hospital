@@ -94,4 +94,20 @@ class UpdatePetRequest extends ApiFormRequest
             ],
         ];
     }
+    //transforma a boolean los datos enviados por form-data
+    protected function prepareForValidation(): void
+    {
+        // Solo transforma y fusiona el dato SI el cliente lo envió en el request
+        $this->whenHas('microchip', function ($value) {
+            $this->merge([
+                'microchip' => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)
+            ]);
+        });
+
+        $this->whenHas('sterilized', function ($value) {
+            $this->merge([
+                'sterilized' => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)
+            ]);
+        });
+    }
 }

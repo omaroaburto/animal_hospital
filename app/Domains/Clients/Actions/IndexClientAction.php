@@ -20,11 +20,12 @@ class IndexClientAction
         });
 
         // 2. Retorno dinámico según el parámetro 'all'
-        return !empty($filters['all'])
+        $users = !empty($filters['all'])
             ? $query->get()
             : $query->paginate(
                 perPage: $filters['per_page'] ?? 10,
                 page: $filters['page'] ?? 1
-            );
+            )->getCollection();
+        return $users;
     }
 }

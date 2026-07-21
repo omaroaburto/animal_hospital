@@ -68,7 +68,7 @@ class ClientPolicy
         {
             Response::deny('Su cuenta está desactivada, comuníquese con un administrador.');
         }
-        
+
         return ($user->role->name === 'superadmin' || $user->role->name === 'admin')
             ? Response::allow()
             : Response::deny('No tienes permisos de \'superadmin\' o \'admin\' para restaurar una cuenta de un clientes.');

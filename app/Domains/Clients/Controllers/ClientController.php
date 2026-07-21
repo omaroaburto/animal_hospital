@@ -29,7 +29,7 @@ class ClientController extends Controller
         IndexClientAction $indexClient,
     )
     {
-        Gate::authorize('anyView', Client::class);
+        Gate::authorize('viewAny', Client::class);
         $result = $indexClient($request->validated());
         return new ClientCollection($result);
     }

@@ -6,16 +6,18 @@ use App\Domains\Clients\Models\Client;
 use App\Domains\Pets\Contracts\ClientPetRepositoryInterface;
 use App\Domains\Pets\Resources\PetCollection;
 use App\Http\Requests\BaseIndexFilterRequest as IndexRequest;
+use Illuminate\Support\Facades\Gate;
 
 class ClientPetIndexController
 {
     public function clientPetIndex(
-        Client $client,  
-        IndexRequest $request, 
+        Client $client,
+        IndexRequest $request,
         ClientPetRepositoryInterface $getPetsByClient
-    ): PetCollection 
+    ): PetCollection
     {
-        $pets = $getPetsByClient($client->id, $request->validated());
+        Gate::authorize('view', $client);
+        $pets = $getPetsByClient($client->id, $request->validated())->getCollection();
         return new PetCollection($pets);
     }
 }

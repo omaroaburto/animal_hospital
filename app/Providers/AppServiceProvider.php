@@ -9,7 +9,7 @@ use App\Domains\Auth\Contracts\UpdateUserActionInterface;
 use App\Domains\Auth\Models\Role;
 use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Policies\AdminPolicy;
-use App\Domains\Auth\Policies\RolePolicy;
+use App\Domains\Auth\Policies\RolePolicy; 
 use App\Domains\Clients\Models\Client;
 use App\Domains\Clients\Policies\ClientPolicy;
 use App\Domains\Pets\Actions\GetPetsByClientAction;

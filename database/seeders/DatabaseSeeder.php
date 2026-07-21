@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\domains\Auth\Models\Role;
 use App\domains\Auth\Models\User;
 use App\Domains\Clients\Models\Client;
+use App\Domains\Pets\Models\Breed;
 use App\Domains\Pets\Models\Pet;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -46,14 +47,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Client::factory()
-            ->count(3)
+            ->count(15)
             ->create()
             ->each(function (Client $client) {
-                Pet::factory()
-                    ->count(5)
-                    ->create([
-                        'client_id' => $client->id,
-                    ]);
+                Breed::all()->each(function (Breed $breed) use ($client) {
+                    Pet::factory()
+                        ->count(rand(2, 7))
+                        ->create([
+                            'client_id' => $client->id,
+                            'breed_id' => $breed->id,
+                        ]);
+                });
             });
 
 

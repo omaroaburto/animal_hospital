@@ -2,10 +2,13 @@
 
 use App\domains\Auth\Controllers\AdminController;
 use App\domains\Auth\Controllers\AuthController;
-use App\Domains\Auth\Controllers\PasswordResetController;
 use App\domains\Auth\Controllers\RoleController;
 use App\Domains\Clients\Controllers\ClientController;
+use App\Domains\Clients\Controllers\ClientPetIndexController;
 use App\Domains\Clients\Controllers\RegionController;
+use App\Domains\Pets\Controllers\BreedController;
+use App\Domains\Pets\Controllers\PetController;
+use App\Domains\Pets\Controllers\SpeciesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,9 +54,19 @@ Route::middleware(['jwt.auth', 'verified:api'])->prefix('v1/')->group(function (
     Route::post('logout',[AuthController::class,'logout']);
 
     //CLIENTES
-    Route::get('v1/clients',[ClientController::class, 'index']);
-    Route::get('v1/clients/{client}',[ClientController::class, 'show']);
-    Route::match(['put','patch'],'v1/clients/{client}',[ClientController::class, 'update']);
-    Route::delete('v1/clients/{client}',[ClientController::class, 'destroy']);
-    Route::post('v1/clients/restore/{client}',[ClientController::class, 'restore']);
+    Route::get('clients',[ClientController::class, 'index']);
+    Route::get('clients/{client}',[ClientController::class, 'show']);
+    Route::get('clients/{client}/pets',[ClientPetIndexController::class, 'clientPetIndex']);
+    Route::match(['put','patch'],'clients/{client}',[ClientController::class, 'update']);
+    Route::delete('clients/{client}',[ClientController::class, 'destroy']);
+    Route::post('clients/restore/{client}',[ClientController::class, 'restore']);
+
+    //MASCOTAS
+    Route::apiResource('species',SpeciesController::class);
+    Route::get('species/{species}/breeds',[SpeciesController::class,'indexSpeciesBreed']);
+    Route::apiResource('breeds',BreedController::class);
+    Route::get('breeds/{breed}/pets',[BreedController::class,'indexBreedPet']);
+    Route::apiResource('pets',PetController::class);
+    Route::post('pets/{pet}/restore',[PetController::class, 'restore']);
+
 });

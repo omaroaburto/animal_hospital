@@ -4,7 +4,7 @@ namespace App\Domains\Auth\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Domains\Clients\Models\Client;
+use App\Domains\Client\Models\Client;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -78,7 +78,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         return $this->getKey();
     }
-    public function getJWTCustomClaims():array
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
@@ -86,7 +86,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     /******************************
      *   Reseteo de password      *
      ******************************/
-     public function sendPasswordResetNotification($token): void
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
     }
@@ -103,7 +103,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
         return $token;
     }
-   /*
+    /*
     public function markEmailAsVerified(): void
     {
         $this->update([

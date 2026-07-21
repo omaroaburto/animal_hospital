@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use App\domains\Auth\Models\Role;
 use App\domains\Auth\Models\User;
-use App\Domains\Clients\Models\Client;
-use App\Domains\Pets\Models\Breed;
-use App\Domains\Pets\Models\Pet;
+use App\Domains\Client\Models\Client;
+use App\Domains\Pet\Models\Breed;
+use App\Domains\Pet\Models\Pet;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -20,12 +20,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ['superadmin','admin', 'client'];
+        $roles = ['superadmin', 'admin', 'client'];
 
         Role::factory()
             ->count(count($roles))
             ->state(new Sequence(
-                fn (Sequence $sequence) => ['name' => $roles[$sequence->index]],
+                fn(Sequence $sequence) => ['name' => $roles[$sequence->index]],
             ))
             ->create();
 
@@ -59,7 +59,5 @@ class DatabaseSeeder extends Seeder
                         ]);
                 });
             });
-
-
     }
 }

@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use App\Domains\Auth\Models\User;
-use App\Domains\Clients\Enums\DocumentType;
-use App\Domains\Clients\Models\Client;
-use App\Domains\Clients\Models\Commune;
+use App\Domains\Client\Enums\DocumentType;
+use App\Domains\Client\Models\Client;
+use App\Domains\Client\Models\Commune;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 
@@ -27,12 +27,12 @@ class ClientFactory extends Factory
         return [
             'document_type' => $documentType->value,
             'document_number' => $documentNumber,
-            'notes'=> null,
+            'notes' => null,
             'secondary_phone' => fake()->numerify('9########'),
             'street' => fake()->streetName,
-            'number' => fake()->numberBetween(1,1500),
-            'apartment' => fake()->optional(0.15)->numberBetween(1,40),
-            'commune_id' => fn () => Commune::query()->inRandomOrder()->value('id'),
+            'number' => fake()->numberBetween(1, 1500),
+            'apartment' => fake()->optional(0.15)->numberBetween(1, 40),
+            'commune_id' => fn() => Commune::query()->inRandomOrder()->value('id'),
             'user_id' => User::factory()->client(),
         ];
     }
@@ -50,7 +50,7 @@ class ClientFactory extends Factory
             $factor = $factor == 7 ? 2 : $factor + 1;
         }
         $dv = 11 - ($sum % 11);
-        $dvStr = match($dv) {
+        $dvStr = match ($dv) {
             11 => '0',
             10 => 'K',
             default => (string)$dv

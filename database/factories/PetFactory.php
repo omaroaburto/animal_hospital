@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Domains\Pets\Enums\Gender;
-use App\Domains\Pets\Models\Breed;
-use App\Domains\Pets\Models\Pet;
+use App\Domains\Pet\Enums\Gender;
+use App\Domains\Pet\Models\Breed;
+use App\Domains\Pet\Models\Pet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PetFactory extends Factory
@@ -24,11 +24,11 @@ class PetFactory extends Factory
         $deathDate = $birthDate !== null && fake()->boolean(30)
             ? fake()->dateTimeBetween($birthDate, 'today')
             : null;
-            
+
         $gender = fake()->randomElement([
-                Gender::MALE,
-                Gender::FEMALE,
-            ]);
+            Gender::MALE,
+            Gender::FEMALE,
+        ]);
 
         return [
             'name' => fake()->name($gender),
